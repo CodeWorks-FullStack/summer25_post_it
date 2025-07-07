@@ -1,9 +1,11 @@
 @import '_main.scss';
+@import url('https://fonts.googleapis.com/css2?family=Fredoka&display=swap');
 
 #app {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  background-image: url(../img/star-bg.svg);
 }
 
 main {
@@ -17,4 +19,14 @@ main {
   flex-direction: column;
   justify-content: start;
   align-items: end;
+}
+
+
+.fredoka-font {
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
