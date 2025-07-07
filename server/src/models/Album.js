@@ -7,7 +7,7 @@ export const AlbumSchema = new Schema(
     title: { type: String, required: true, minLength: 3, maxLength: 25 },
     description: { type: String, minLength: 15, maxLength: 250 },
     coverImg: { type: String, required: true, maxLength: 500 },
-    archived: { type: Boolean, required: true },
+    archived: { type: Boolean, required: true, default: false },
     category: { type: String, enum: ['aesthetics', 'food', 'games', 'animals', 'vibes', 'misc'], required: true },
   },
   {
@@ -15,3 +15,10 @@ export const AlbumSchema = new Schema(
     toJSON: { virtuals: true }
   }
 )
+
+AlbumSchema.virtual('creator', {
+  localField: 'creatorId',
+  foreignField: '_id',
+  ref: 'Account',
+  justOne: true
+})
