@@ -4,6 +4,10 @@ import { Album } from "@/models/Album.js"
 import { AppState } from "@/AppState.js"
 
 class AlbumsService {
+  async getAlbumById(albumId) {
+    const response = await api.get(`/api/albums/${albumId}`)
+    logger.log('GOT ALBUM 📔', response.data)
+  }
   async getAlbums() {
     const response = await api.get('api/albums')
     logger.log('GOT ALBUMS 📔📔📔📔📔', response.data)
