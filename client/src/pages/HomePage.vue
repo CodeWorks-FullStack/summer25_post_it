@@ -1,5 +1,22 @@
 <script setup>
+import { albumsService } from '@/services/AlbumsService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
+import { onMounted } from 'vue';
 
+onMounted(() => {
+  getAlbums()
+})
+
+async function getAlbums() {
+  try {
+    await albumsService.getAlbums()
+  } catch (error) {
+    logger.error('COULD NOT GET ALBUMS', error)
+    Pop.error(error)
+  }
+
+}
 
 </script>
 
