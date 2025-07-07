@@ -8,23 +8,25 @@ defineProps({
 
 
 <template>
-  <div :style="{ backgroundImage: `url(${album.coverImg})` }"
-    class="rounded album-card p-2 d-flex flex-column justify-content-end">
-    <div class="bg-dark p-2 rounded d-flex justify-content-between align-items-center">
-      <div>
-        <b>{{ album.title }}</b>
+  <RouterLink :to="{ name: 'Album Details', params: { albumId: album.id } }">
+    <div :style="{ backgroundImage: `url(${album.coverImg})` }"
+      class="rounded album-card p-2 d-flex flex-column justify-content-end">
+      <div class="bg-dark p-2 rounded d-flex justify-content-between align-items-center">
         <div>
-          <img :src="album.creator.picture" :alt="album.creator.name">
-          <span class="ms-2">{{ album.creator.name }}</span>
+          <b>{{ album.title }}</b>
+          <div>
+            <img :src="album.creator.picture" :alt="album.creator.name">
+            <span class="ms-2">{{ album.creator.name }}</span>
+          </div>
+        </div>
+        <div>
+          <!-- TODO put watcherCount here when done -->
+          <b>0</b>
+          <span class="mdi mdi-account-multiple ms-2"></span>
         </div>
       </div>
-      <div>
-        <!-- TODO put watcherCount here when done -->
-        <b>0</b>
-        <span class="mdi mdi-account-multiple ms-2"></span>
-      </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 
@@ -39,5 +41,10 @@ img {
   height: 2rem;
   aspect-ratio: 1/1;
   border-radius: 50%;
+}
+
+a {
+  text-decoration: none;
+  color: var(--bs-white);
 }
 </style>
