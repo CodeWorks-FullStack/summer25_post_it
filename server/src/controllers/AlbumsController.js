@@ -7,8 +7,10 @@ export class AlbumsController extends BaseController {
     super('api/albums')
     this.router
       .get('', this.getAllAlbums)
+      .get('/:albumId', this.getAlbumById)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createAlbum)
+      .delete('/:albumId', this.archiveAlbum) //soft delete
   }
 
   /**
@@ -37,6 +39,38 @@ export class AlbumsController extends BaseController {
     try {
       const albums = await albumsService.getAllAlbums()
       response.send(albums)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  /**
+  @param {import("express").Request} request
+  @param {import("express").Response} response
+  @param {import("express").NextFunction} next
+  */
+  async getAlbumById(request, response, next) {
+    try {
+      const albumId = request.params.albumId // '/:cornDog' --> request.params.cornDog
+      const album = await albumsService.getAlbumById(albumId)
+      response.send(album)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+
+  /**
+  @param {import("express").Request} request
+  @param {import("express").Response} response
+  @param {import("express").NextFunction} next
+  */
+  async archiveAlbum(request, response, next) {
+    try {
+      const albumId = request.params.albumId
+      const userInfo = request.userInfo
+      const album = await albumsService.archiveAlbum(albumId, userInfo)
+      response.send(album)
     } catch (error) {
       next(error)
     }
