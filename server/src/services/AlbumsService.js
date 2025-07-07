@@ -6,7 +6,7 @@ class AlbumsService {
     const album = await this.getAlbumById(albumId)
 
     if (album.creatorId != userInfo.id) {
-      throw new Forbidden(`You cannot archive another user's album ${userInfo.nickName}!`)
+      throw new Forbidden(`You cannot archive another user's album ${userInfo.nickname}!`)
     }
 
     album.archived = true
