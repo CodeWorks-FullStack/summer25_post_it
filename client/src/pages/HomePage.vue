@@ -4,9 +4,18 @@ import AlbumCard from '@/components/AlbumCard.vue';
 import { albumsService } from '@/services/AlbumsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-const albums = computed(() => AppState.albums)
+const albums = computed(() => {
+
+  if (selectedCategory.value == 'all') {
+    return AppState.albums
+  }
+
+  return AppState.albums.filter(album => album.category == selectedCategory.value)
+})
+
+const selectedCategory = ref('all')
 
 const categories = [
   {
@@ -23,7 +32,7 @@ const categories = [
   },
   {
     name: 'games',
-    img: 'https://images.unsplash.com/photo-1533236897111-3e94666b2edf?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXJjYWRlfGVufDB8fDB8fHwy'
+    img: 'https://images.unsplash.com/photo-1533654238074-8841f6e8e610?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzl8fGFyY2FkZXxlbnwwfHwwfHx8Mg%3D%3D'
   },
   {
     name: 'aesthetics',
@@ -38,6 +47,7 @@ const categories = [
     img: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGFic3RyYWN0fGVufDB8fDB8fHwy'
   },
 ]
+
 
 onMounted(() => {
   getAlbums()
@@ -65,12 +75,13 @@ async function getAlbums() {
     </div>
     <div class="row">
       <div v-for="category in categories" :key="category.name" class="col-6 col-md-3 mb-3">
-        <div class="py-4 rounded category-bg" :style="{ backgroundImage: `url(${category.img})` }">
+        <div @click="selectedCategory = category.name" class="py-4 rounded category-bg"
+          :style="{ backgroundImage: `url(${category.img})` }" role="button">
           <div class="text-center text-capitalize fs-2">{{ category.name }}</div>
         </div>
       </div>
       <div class="col-6 col-md-3 mb-3">
-        <div class="py-4 rounded category-bg green-bg">
+        <div class="py-4 rounded category-bg green-bg" role="button">
           <div class="text-center text-capitalize fs-2">Create +</div>
         </div>
       </div>
