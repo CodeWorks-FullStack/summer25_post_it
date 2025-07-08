@@ -2,6 +2,7 @@
 import { albumsService } from '@/services/AlbumsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
+import { Modal } from 'bootstrap';
 import { ref } from 'vue';
 
 const categories = ['aesthetics', 'food', 'games', 'animals', 'vibes', 'misc']
@@ -16,6 +17,15 @@ const editableAlbumData = ref({
 async function createAlbum() {
   try {
     await albumsService.createAlbum(editableAlbumData.value)
+    // clears form
+    editableAlbumData.value = {
+      title: '',
+      description: '',
+      coverImg: '',
+      category: ''
+    }
+    // closes modal
+    Modal.getOrCreateInstance('#albumModal').hide()
   } catch (error) {
     Pop.error(error)
     logger.error('COULD NOT CREATE', error)
