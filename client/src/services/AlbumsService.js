@@ -9,6 +9,7 @@ class AlbumsService {
     logger.log('CREATED ALBUM 📔✨', response.data)
     const album = new Album(response.data)
     AppState.albums.push(album)
+    return album.id
   }
   async archiveAlbum(albumId) {
     const response = await api.delete(`/api/albums/${albumId}`)

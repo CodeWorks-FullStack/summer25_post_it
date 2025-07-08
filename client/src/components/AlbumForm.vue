@@ -4,6 +4,10 @@ import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+// NOTE allows us to programmatically change information about the current route
+const router = useRouter()
 
 const categories = ['aesthetics', 'food', 'games', 'animals', 'vibes', 'misc']
 
@@ -16,7 +20,7 @@ const editableAlbumData = ref({
 
 async function createAlbum() {
   try {
-    await albumsService.createAlbum(editableAlbumData.value)
+    const albumId = await albumsService.createAlbum(editableAlbumData.value)
     // clears form
     editableAlbumData.value = {
       title: '',
@@ -26,6 +30,8 @@ async function createAlbum() {
     }
     // closes modal
     Modal.getOrCreateInstance('#albumModal').hide()
+
+    router.push({ name: 'Album Details', params: { albumId: albumId } })
   } catch (error) {
     Pop.error(error)
     logger.error('COULD NOT CREATE', error)
