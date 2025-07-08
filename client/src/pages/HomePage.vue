@@ -77,7 +77,9 @@ async function getAlbums() {
       <div v-for="category in categories" :key="category.name" class="col-6 col-md-3 mb-3">
         <div @click="selectedCategory = category.name" class="py-4 rounded category-bg"
           :style="{ backgroundImage: `url(${category.img})` }" role="button">
-          <div class="text-center text-capitalize fs-2">{{ category.name }}</div>
+          <div class="text-center text-capitalize fs-2" :class="{ 'underline': category.name == selectedCategory }">
+            {{ category.name }}
+          </div>
         </div>
       </div>
       <div class="col-6 col-md-3 mb-3">
@@ -112,5 +114,10 @@ async function getAlbums() {
 
 .green-bg {
   background-image: url(https://images.unsplash.com/photo-1588097247274-a174dd59f20d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YWJzdHJhY3QlMjBncmVlbnxlbnwwfHwwfHx8Mg%3D%3D);
+}
+
+.underline {
+  text-decoration: underline;
+  text-decoration-color: var(--bs-success);
 }
 </style>
