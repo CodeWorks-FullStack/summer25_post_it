@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { albumsService } from '@/services/AlbumsService.js';
+import { watchersService } from '@/services/WatchersService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
@@ -13,6 +14,7 @@ const route = useRoute()
 
 onMounted(() => {
   getAlbumById()
+  getWatchersByAlbumId()
 })
 
 async function getAlbumById() {
@@ -36,6 +38,16 @@ async function archiveAlbum() {
   } catch (error) {
     Pop.error(error)
     logger.error('COULD NOT ARCHIVE ALBUM', error)
+  }
+}
+
+async function getWatchersByAlbumId() {
+  try {
+    const albumId = route.params.albumId
+    await watchersService.getWatchersByAlbumId(albumId)
+  } catch (error) {
+    Pop.error(error)
+    logger.error('COULD NOT GET WATCHERS', error)
   }
 }
 
