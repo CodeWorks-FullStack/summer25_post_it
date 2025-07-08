@@ -1,4 +1,7 @@
 <script setup>
+import { albumsService } from '@/services/AlbumsService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
 import { ref } from 'vue';
 
 const categories = ['aesthetics', 'food', 'games', 'animals', 'vibes', 'misc']
@@ -9,11 +12,20 @@ const editableAlbumData = ref({
   coverImg: '',
   category: ''
 })
+
+async function createAlbum() {
+  try {
+    await albumsService.createAlbum(editableAlbumData.value)
+  } catch (error) {
+    Pop.error(error)
+    logger.error('COULD NOT CREATE', error)
+  }
+}
 </script>
 
 
 <template>
-  <form>
+  <form @submit.prevent="createAlbum()">
     <div class="form-floating mb-3">
       <input v-model="editableAlbumData.title" type="text" class="form-control" id="album-title"
         placeholder="Album Title..." required minlength="3" maxlength="25">
