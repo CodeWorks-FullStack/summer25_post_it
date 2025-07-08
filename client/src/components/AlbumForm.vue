@@ -20,7 +20,9 @@ const editableAlbumData = ref({
 
 async function createAlbum() {
   try {
+    // NOTE because the service *returns* a value, we can save it to a variable here
     const albumId = await albumsService.createAlbum(editableAlbumData.value)
+
     // clears form
     editableAlbumData.value = {
       title: '',
@@ -28,10 +30,13 @@ async function createAlbum() {
       coverImg: '',
       category: ''
     }
+
     // closes modal
     Modal.getOrCreateInstance('#albumModal').hide()
 
+    // redirects to different page
     router.push({ name: 'Album Details', params: { albumId: albumId } })
+
   } catch (error) {
     Pop.error(error)
     logger.error('COULD NOT CREATE', error)
