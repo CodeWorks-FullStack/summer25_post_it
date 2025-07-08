@@ -8,6 +8,37 @@ import { computed, onMounted } from 'vue';
 
 const albums = computed(() => AppState.albums)
 
+const categories = [
+  {
+    name: 'all',
+    img: 'https://images.unsplash.com/photo-1528818955841-a7f1425131b5?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3RhcnJ5JTIwc2t5fGVufDB8fDB8fHwy'
+  },
+  {
+    name: 'animals',
+    img: 'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNhdHN8ZW58MHx8MHx8fDI%3D'
+  },
+  {
+    name: 'vibes',
+    img: 'https://images.unsplash.com/photo-1541423408854-5df732b6f6d1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2l0eSUyMHNreWxpbmV8ZW58MHx8MHx8fDI%3D'
+  },
+  {
+    name: 'games',
+    img: 'https://images.unsplash.com/photo-1533236897111-3e94666b2edf?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXJjYWRlfGVufDB8fDB8fHwy'
+  },
+  {
+    name: 'aesthetics',
+    img: 'https://images.unsplash.com/photo-1673313530503-39b757cc1572?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bXQlMjBmdWppfGVufDB8fDB8fHwy'
+  },
+  {
+    name: 'food',
+    img: 'https://scrandle.com/scran_img/F7WSUNcXAAA02lt.webp'
+  },
+  {
+    name: 'misc',
+    img: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGFic3RyYWN0fGVufDB8fDB8fHwy'
+  },
+]
+
 onMounted(() => {
   getAlbums()
 })
@@ -19,13 +50,32 @@ async function getAlbums() {
     logger.error('COULD NOT GET ALBUMS', error)
     Pop.error(error)
   }
-
 }
 
 </script>
 
 <template>
-  <!-- TODO make the filter bar -->
+  <section class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="fredoka-font fw-bold border-bottom border-gray my-3">
+          Find Your Interest
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div v-for="category in categories" :key="category.name" class="col-6 col-md-3 mb-3">
+        <div class="py-4 rounded category-bg" :style="{ backgroundImage: `url(${category.img})` }">
+          <div class="text-center text-capitalize fs-2">{{ category.name }}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3">
+        <div class="py-4 rounded category-bg green-bg">
+          <div class="text-center text-capitalize fs-2">Create +</div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="container">
     <div class="row">
       <div class="col-12">
@@ -42,4 +92,14 @@ async function getAlbums() {
   </section>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.category-bg {
+  background-size: cover;
+  text-shadow: 1px 2px black;
+  background-position: bottom;
+}
+
+.green-bg {
+  background-image: url(https://images.unsplash.com/photo-1588097247274-a174dd59f20d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YWJzdHJhY3QlMjBncmVlbnxlbnwwfHwwfHx8Mg%3D%3D);
+}
+</style>
