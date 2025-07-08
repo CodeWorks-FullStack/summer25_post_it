@@ -8,6 +8,7 @@ export class Album {
     this.createdAt = new Date(data.createdAt)
     this.updatedAt = new Date(data.updatedAt)
     this.creator = data.creator
+    this.creatorId = data.creatorId
     this.id = data.id || data._id
   }
 }

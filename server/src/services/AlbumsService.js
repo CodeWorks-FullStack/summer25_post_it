@@ -9,7 +9,7 @@ class AlbumsService {
       throw new Forbidden(`You cannot archive another user's album ${userInfo.nickname}!`)
     }
 
-    album.archived = true
+    album.archived = !album.archived
 
     await album.save() // updates myself in the database
 
