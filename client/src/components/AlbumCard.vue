@@ -11,7 +11,7 @@ defineProps({
   <RouterLink :to="{ name: 'Album Details', params: { albumId: album.id } }">
     <div :style="{ backgroundImage: `url(${album.coverImg})` }"
       class="rounded album-card p-2 d-flex flex-column justify-content-end">
-      <div class="bg-dark p-2 rounded d-flex justify-content-between align-items-center">
+      <div class="glass-card p-2 rounded d-flex justify-content-between align-items-center">
         <div>
           <b>{{ album.title }}</b>
           <div>
