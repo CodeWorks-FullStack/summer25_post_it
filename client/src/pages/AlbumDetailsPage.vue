@@ -73,6 +73,23 @@ async function archiveAlbum() {
         </div>
       </div>
     </div>
+    <div class="row">
+      <section class="col-md-3">
+        <div class="d-flex my-3">
+          <div class="glass-card p-2 rounded flex-grow-1">
+            <b class="d-block">{{ album.watcherCount }}</b>
+            <b>Watchers</b>
+          </div>
+          <button class="btn btn-success">
+            <span class="mdi mdi-account-plus d-block"></span>
+            Join
+          </button>
+        </div>
+      </section>
+      <section class="col-md-9">
+        <!-- TODO picture stuff goes here -->
+      </section>
+    </div>
   </section>
   <section v-else class="container">
     <div class="row">

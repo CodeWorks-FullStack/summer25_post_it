@@ -22,8 +22,7 @@ defineProps({
           </div>
         </div>
         <div>
-          <!-- TODO put watcherCount here when done -->
-          <b>0</b>
+          <b>{{ album.watcherCount }}</b>
           <span class="mdi mdi-account-multiple ms-2"></span>
         </div>
       </div>

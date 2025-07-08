@@ -10,5 +10,6 @@ export class Album {
     this.creator = data.creator
     this.creatorId = data.creatorId
     this.id = data.id || data._id
+    this.watcherCount = data.watcherCount
   }
 }
