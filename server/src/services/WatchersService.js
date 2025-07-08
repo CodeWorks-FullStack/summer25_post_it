@@ -1,6 +1,20 @@
 import { dbContext } from "../db/DbContext.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
 
 class WatchersService {
+  async deleteWatcher(watcherId, userInfo) {
+    const watcher = await dbContext.Watchers.findById(watcherId)
+
+    if (!watcher) {
+      throw new BadRequest(`Invalid id: ${watcherId}`)
+    }
+
+    if (userInfo.id != watcher.accountId) {
+      throw new Forbidden(`YOU ARE GOING TO JAIL ${userInfo.nickname.toUpperCase()}!`)
+    }
+
+    await watcher.deleteOne()
+  }
   async getWatchersByAccountId(userId) {
     const watchers = await dbContext.Watchers.find({ accountId: userId }).populate('album')
     return watchers
