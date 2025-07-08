@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import AlbumCard from '@/components/AlbumCard.vue';
+import AlbumModal from '@/components/AlbumModal.vue';
 import { albumsService } from '@/services/AlbumsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -83,7 +84,8 @@ async function getAlbums() {
         </div>
       </div>
       <div class="col-6 col-md-3 mb-3">
-        <div class="py-4 rounded category-bg green-bg" role="button">
+        <div class="py-4 rounded category-bg green-bg" role="button" data-bs-toggle="modal"
+          data-bs-target="#albumModal">
           <div class="text-center text-capitalize fs-2">Create +</div>
         </div>
       </div>
@@ -103,6 +105,8 @@ async function getAlbums() {
       </div>
     </div>
   </section>
+
+  <AlbumModal />
 </template>
 
 <style scoped lang="scss">
