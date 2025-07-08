@@ -9,6 +9,7 @@ import { useRoute } from 'vue-router';
 
 const album = computed(() => AppState.album)
 const account = computed(() => AppState.account)
+const watcherProfiles = computed(() => AppState.watcherProfiles)
 
 const route = useRoute()
 
@@ -92,10 +93,16 @@ async function getWatchersByAlbumId() {
             <b class="d-block">{{ album.watcherCount }}</b>
             <b>Watchers</b>
           </div>
-          <button class="btn btn-success">
+          <button v-if="account" class="btn btn-success" type="button">
             <span class="mdi mdi-account-plus d-block"></span>
             Join
           </button>
+        </div>
+        <div class="row">
+          <div v-for="watcherProfile in watcherProfiles" :key="watcherProfile.id" class="col-4">
+            <img :src="watcherProfile.profile.picture" :alt="watcherProfile.profile.name" class="profile-img rounded"
+              :title="`${watcherProfile.profile.name} has been watching this album since ${watcherProfile.createdAt.toLocaleString()}`">
+          </div>
         </div>
       </section>
       <section class="col-md-9">
@@ -124,5 +131,12 @@ async function getWatchersByAlbumId() {
   height: 50px;
   aspect-ratio: 1/1;
   border-radius: 50%;
+}
+
+.profile-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  box-shadow: 3px 3px var(--bs-white);
 }
 </style>

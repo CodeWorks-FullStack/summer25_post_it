@@ -16,6 +16,8 @@ const albums = computed(() => {
   return AppState.albums.filter(album => album.category == selectedCategory.value)
 })
 
+const account = computed(() => AppState.account)
+
 const selectedCategory = ref('all')
 
 const categories = [
@@ -83,7 +85,7 @@ async function getAlbums() {
           </div>
         </div>
       </div>
-      <div class="col-6 col-md-3 mb-3">
+      <div v-if="account" class="col-6 col-md-3 mb-3">
         <div class="py-4 rounded category-bg green-bg" role="button" data-bs-toggle="modal"
           data-bs-target="#albumModal">
           <div class="text-center text-capitalize fs-2">Create +</div>
