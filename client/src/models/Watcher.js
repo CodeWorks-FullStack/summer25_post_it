@@ -1,5 +1,6 @@
 import { Album } from "./Album.js"
 
+// NOTE base model that will only be inherited from
 class Watcher {
   constructor(data) {
     this.id = data.id || data._id
@@ -10,6 +11,7 @@ class Watcher {
   }
 }
 
+// NOTE sometimes the watcher has a profile
 export class WatcherProfile extends Watcher {
   constructor(data) {
     super(data)
@@ -17,6 +19,7 @@ export class WatcherProfile extends Watcher {
   }
 }
 
+// NOTE sometimes the watcher has an album
 export class WatcherAlbum extends Watcher {
   constructor(data) {
     super(data)

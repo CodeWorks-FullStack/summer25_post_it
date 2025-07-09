@@ -20,7 +20,7 @@ const editableAlbumData = ref({
 
 async function createAlbum() {
   try {
-    // NOTE because the service *returns* a value, we can save it to a variable here
+    // NOTE because the service method *returns* a value, we can save it to a variable here
     const albumId = await albumsService.createAlbum(editableAlbumData.value)
 
     // clears form
@@ -67,7 +67,7 @@ async function createAlbum() {
       <select v-model="editableAlbumData.category" class="form-select" id="album-category" aria-label="Album Category"
         required>
         <option selected disabled value="">Choose a category</option>
-        <option v-for="category in categories" :key="category" :value="category">
+        <option v-for="category in categories" :key="`album-form-${category}`" :value="category">
           {{ category }}
         </option>
       </select>

@@ -17,6 +17,7 @@ class WatchersService {
   }
   async getWatchersByAccountId(userId) {
     // const watchers = await dbContext.Watchers.find({ accountId: userId }).populate('album')
+    // NOTE nested populate. we have to populate the album FIRST, and then run the virtuals on the album schema
     const watchers = await dbContext.Watchers.find({ accountId: userId }).populate({
       path: 'album',
       populate: {
@@ -31,6 +32,7 @@ class WatchersService {
     const watchers = await dbContext.Watchers.find({ albumId: albumId }).populate('profile', 'name picture')
     return watchers
   }
+
   async createWatcher(watcherData) {
     const watcher = await dbContext.Watchers.create(watcherData)
     await watcher.populate('profile', 'name picture')

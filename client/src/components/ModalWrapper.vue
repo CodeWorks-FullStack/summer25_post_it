@@ -19,7 +19,8 @@ defineProps({
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- NOTE this is a v-slot -->
+          <!-- NOTE v-slot -->
+          <!-- when this component is injected, you can slot in whatever text/html/component you want -->
           <slot></slot>
         </div>
       </div>

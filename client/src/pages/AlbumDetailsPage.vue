@@ -59,8 +59,8 @@ async function getWatchersByAlbumId() {
 
 async function createWatcher() {
   try {
+    // NOTE the data you send as the request body must be formatted as an object with the correct key:value pairs that your api is expecting
     const watcherData = { albumId: route.params.albumId }
-
     await watchersService.createWatcher(watcherData)
   } catch (error) {
     Pop.error(error)
@@ -140,7 +140,6 @@ async function getPicturesByAlbumId() {
 
       <!-- SECTION pictures -->
       <section class="col-md-9">
-        <!-- TODO make the masonry -->
         <div class="masonry-container">
           <div v-for="picture in pictures" :key="picture.id" class="mb-3 position-relative">
             <img :src="picture.imgUrl" :alt="`A picture submitted by ${picture.creator.name}`"
@@ -168,6 +167,7 @@ async function getPicturesByAlbumId() {
   </section>
 
   <ModalWrapper modalId="pictureModal" modalHeader="Create Picture">
+    <!-- injects the PictureForm into the ModalWrapper's <slot> -->
     <PictureForm />
   </ModalWrapper>
 </template>

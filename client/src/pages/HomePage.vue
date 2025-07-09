@@ -78,7 +78,7 @@ async function getAlbums() {
       </div>
     </div>
     <div class="row">
-      <div v-for="category in categories" :key="category.name" class="col-6 col-md-3 mb-3">
+      <div v-for="category in categories" :key="`filter-${category.name}`" class="col-6 col-md-3 mb-3">
         <div @click="selectedCategory = category.name" class="py-4 rounded category-bg"
           :style="{ backgroundImage: `url(${category.img})` }" role="button">
           <div class="text-center text-capitalize fs-2" :class="{ 'underline': category.name == selectedCategory }">

@@ -12,7 +12,7 @@ export class AlbumsController extends BaseController {
       .get('/:albumId', this.getAlbumById)
       .get('/:albumId/watchers', this.getWatchersByAlbumId)
       .get('/:albumId/pictures', this.getPicturesByAlbumId)
-      .use(Auth0Provider.getAuthorizedUserInfo)
+      .use(Auth0Provider.getAuthorizedUserInfo) // all routes after (below) .use require authorization
       .post('', this.createAlbum)
       .delete('/:albumId', this.archiveAlbum) //soft delete
   }
@@ -25,6 +25,7 @@ export class AlbumsController extends BaseController {
   async createAlbum(request, response, next) {
     try {
       const albumData = request.body
+      // NOTE if you are getting red squiggles under the userInfo, you can open the /types/index.d.ts file to get accurate intellisense
       const userInfo = request.userInfo
       albumData.creatorId = userInfo.id
       const album = await albumsService.createAlbum(albumData)

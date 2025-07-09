@@ -12,7 +12,7 @@ class WatchersService {
     // NOTE this is good code
     // watchers.splice(index, 1)
 
-    // NOTE reference at your own peril
+    // NOTE reference at your own peril 💀
     const deletedWatcher = watchers.splice(index, 1)[0]
     watchers.forEach(watcher => {
       if (watcher.albumId == deletedWatcher.albumId) watcher.album.watcherCount--
