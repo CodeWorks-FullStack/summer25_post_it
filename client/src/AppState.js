@@ -13,4 +13,3 @@ export const AppState = reactive({
   /** @type {import('./models/Watcher.js').WatcherProfile[]} */
   watcherProfiles: []
 })
-

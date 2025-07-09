@@ -52,12 +52,25 @@ async function getWatchersByAlbumId() {
   }
 }
 
+async function createWatcher() {
+  try {
+    const watcherData = { albumId: route.params.albumId }
+
+    await watchersService.createWatcher(watcherData)
+  } catch (error) {
+    Pop.error(error)
+    logger.error('COULD NOT CREATE WATCHER', error)
+  }
+}
+
 </script>
 
 
 <template>
-  <section v-if="album" class="container">
-    <div class="row cover-img justify-content-center align-items-end rounded mt-3"
+  <div v-if="album" class="container">
+
+    <!-- SECTION album details -->
+    <section class="row cover-img justify-content-center align-items-end rounded mt-3"
       :style="{ backgroundImage: `url(${album.coverImg})` }">
       <div class="col-md-8 mb-2">
         <div class="glass-card rounded p-2">
@@ -85,31 +98,38 @@ async function getWatchersByAlbumId() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
+    <!-- !SECTION -->
+
     <div class="row">
+      <!-- SECTION watcher profiles -->
       <section class="col-md-3">
         <div class="d-flex my-3">
           <div class="glass-card p-2 rounded flex-grow-1">
             <b class="d-block">{{ album.watcherCount }}</b>
             <b>Watchers</b>
           </div>
-          <button v-if="account" class="btn btn-success" type="button">
+          <button @click="createWatcher()" v-if="account" class="btn btn-success" type="button">
             <span class="mdi mdi-account-plus d-block"></span>
             Join
           </button>
         </div>
         <div class="row">
-          <div v-for="watcherProfile in watcherProfiles" :key="watcherProfile.id" class="col-4">
+          <div v-for="watcherProfile in watcherProfiles" :key="watcherProfile.id" class="col-4 mb-3">
             <img :src="watcherProfile.profile.picture" :alt="watcherProfile.profile.name" class="profile-img rounded"
               :title="`${watcherProfile.profile.name} has been watching this album since ${watcherProfile.createdAt.toLocaleString()}`">
           </div>
         </div>
       </section>
+      <!-- !SECTION -->
+
+      <!-- SECTION pictures -->
       <section class="col-md-9">
         <!-- TODO picture stuff goes here -->
       </section>
+      <!-- !SECTION -->
     </div>
-  </section>
+  </div>
   <section v-else class="container">
     <div class="row">
       <div class="col-12">

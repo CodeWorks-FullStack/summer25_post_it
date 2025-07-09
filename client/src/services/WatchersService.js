@@ -4,6 +4,10 @@ import { WatcherProfile } from "@/models/Watcher.js"
 import { AppState } from "@/AppState.js"
 
 class WatchersService {
+  async createWatcher(watcherData) {
+    const response = await api.post('api/watchers', watcherData)
+    logger.log('CREATED WATCHER 👀', response.data)
+  }
   async getWatchersByAlbumId(albumId) {
     const response = await api.get(`api/albums/${albumId}/watchers`)
     logger.log('GOT WATCHERS 👀👀👀👀', response.data)
