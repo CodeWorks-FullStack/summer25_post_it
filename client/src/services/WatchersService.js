@@ -33,6 +33,7 @@ class WatchersService {
   }
 
   async getWatchersByAlbumId(albumId) {
+    AppState.watcherProfiles = [] //🙅‍♂️👻
     const response = await api.get(`api/albums/${albumId}/watchers`)
     logger.log('GOT WATCHERS 👀👀👀👀', response.data)
     const watchers = response.data.map(pojo => new WatcherProfile(pojo))
