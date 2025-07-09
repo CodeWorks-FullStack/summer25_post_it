@@ -9,11 +9,13 @@ class WatchersService {
     logger.log('deleted watcher', response.data)
     const watchers = AppState.watcherAlbums
     const index = watchers.findIndex(watcher => watcher.id == watcherId)
-    const watcherToDelete = watchers[index]
-    watchers.splice(index, 1)
+    // NOTE this is good code
+    // watchers.splice(index, 1)
+
     // NOTE reference at your own peril
+    const deletedWatcher = watchers.splice(index, 1)[0]
     watchers.forEach(watcher => {
-      if (watcher.albumId == watcherToDelete.albumId) watcher.album.watcherCount--
+      if (watcher.albumId == deletedWatcher.albumId) watcher.album.watcherCount--
     })
   }
   async getMyWatchedAlbums() {
