@@ -115,7 +115,7 @@ async function createWatcher() {
           </button>
         </div>
         <div class="row">
-          <div v-for="watcherProfile in watcherProfiles" :key="watcherProfile.id" class="col-4 mb-3">
+          <div v-for="watcherProfile in watcherProfiles" :key="watcherProfile.id" class="col-3 col-md-4 mb-3">
             <img :src="watcherProfile.profile.picture" :alt="watcherProfile.profile.name" class="profile-img rounded"
               :title="`${watcherProfile.profile.name} has been watching this album since ${watcherProfile.createdAt.toLocaleString()}`">
           </div>
