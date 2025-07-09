@@ -4,6 +4,10 @@ import { Picture } from "@/models/Picture.js"
 import { AppState } from "@/AppState.js"
 
 class PicturesService {
+  async createPicture(pictureData) {
+    const response = await api.post('api/pictures', pictureData)
+    logger.log('CREATED PICTURE 🖼️✨', response.data)
+  }
   async getPicturesByAlbumId(albumId) {
     AppState.pictures = [] //🙅‍♂️👻
     const response = await api.get(`api/albums/${albumId}/pictures`)
