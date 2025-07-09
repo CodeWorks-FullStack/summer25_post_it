@@ -11,6 +11,7 @@ import { useRoute } from 'vue-router';
 const album = computed(() => AppState.album)
 const account = computed(() => AppState.account)
 const watcherProfiles = computed(() => AppState.watcherProfiles)
+const pictures = computed(() => AppState.pictures)
 
 const route = useRoute()
 
@@ -113,10 +114,10 @@ async function getPicturesByAlbumId() {
     </section>
     <!-- !SECTION -->
 
-    <div class="row">
+    <div class="row mt-3">
       <!-- SECTION watcher profiles -->
       <section class="col-md-3">
-        <div class="d-flex my-3">
+        <div class="d-flex mb-3">
           <div class="glass-card p-2 rounded flex-grow-1">
             <b class="d-block">{{ album.watcherCount }}</b>
             <b>Watchers</b>
@@ -137,7 +138,12 @@ async function getPicturesByAlbumId() {
 
       <!-- SECTION pictures -->
       <section class="col-md-9">
-        <!-- TODO picture stuff goes here -->
+        <!-- TODO make the masonry -->
+        <div class="masonry-container">
+          <div v-for="picture in pictures" :key="picture.id">
+            <img :src="picture.imgUrl" :alt="`A picture submitted by ${picture.creator.name}`">
+          </div>
+        </div>
       </section>
       <!-- !SECTION -->
     </div>
