@@ -4,14 +4,16 @@ import { AppState } from '../AppState.js';
 import { Pop } from '@/utils/Pop.js';
 import { logger } from '@/utils/Logger.js';
 import { watchersService } from '@/services/WatchersService.js';
+import AlbumCard from '@/components/AlbumCard.vue';
 
 const account = computed(() => AppState.account)
+const watcherAlbums = computed(() => AppState.watcherAlbums)
 
 onMounted(() => {
-  getMyWacthedAlbums()
+  getMyWatchedAlbums()
 })
 
-async function getMyWacthedAlbums() {
+async function getMyWatchedAlbums() {
   try {
     await watchersService.getMyWatchedAlbums()
   } catch (error) {
@@ -30,6 +32,11 @@ async function getMyWacthedAlbums() {
           welcome back <span class="text-white">{{ account.name }}</span>
           <img :src="account.picture" :alt="account.name" class="account-img ms-2">
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div v-for="watcherAlbum in watcherAlbums" :key="watcherAlbum.id" class="col-md-4 mb-3">
+        <AlbumCard :album="watcherAlbum.album" />
       </div>
     </div>
   </div>

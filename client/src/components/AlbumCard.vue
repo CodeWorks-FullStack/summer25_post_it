@@ -16,12 +16,12 @@ defineProps({
           <b>{{ album.title }}</b>
           <span v-if="album.archived" class="mdi mdi-sign-caution text-warning ms-2"
             :title="`${album.title} is archived`"></span>
-          <div>
+          <div v-if="album.creator">
             <img :src="album.creator.picture" :alt="album.creator.name">
             <span class="ms-2">{{ album.creator.name }}</span>
           </div>
         </div>
-        <div>
+        <div v-if="album.watcherCount != undefined">
           <b>{{ album.watcherCount }}</b>
           <span class="mdi mdi-account-multiple ms-2"></span>
         </div>
