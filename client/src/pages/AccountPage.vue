@@ -22,6 +22,19 @@ async function getMyWatchedAlbums() {
   }
 }
 
+async function deleteWatcher(watcherId) {
+  const confirmed = await Pop.confirm('Are you sure you want to leave this album?')
+
+  if (!confirmed) return
+  try {
+    logger.log('deleting watcher', watcherId)
+    await watchersService.deleteWatcher(watcherId)
+  } catch (error) {
+    Pop.error(error)
+    logger.error('COULD NOT DELETE WATCHER', error)
+  }
+}
+
 </script>
 
 <template>
@@ -32,11 +45,22 @@ async function getMyWatchedAlbums() {
           welcome back <span class="text-white">{{ account.name }}</span>
           <img :src="account.picture" :alt="account.name" class="account-img ms-2">
         </div>
+        <div class="my-5 text-center">
+          you are watching {{ watcherAlbums.length }} albums
+        </div>
       </div>
     </div>
     <div class="row">
-      <div v-for="watcherAlbum in watcherAlbums" :key="watcherAlbum.id" class="col-md-4 mb-3">
-        <AlbumCard :album="watcherAlbum.album" />
+      <div v-for="watcherAlbum in watcherAlbums" :key="watcherAlbum.id" class="col-md-4 mb-4">
+        <div class="position-relative">
+          <AlbumCard :album="watcherAlbum.album" />
+          <div class="text-end mt-1">
+            <button @click="deleteWatcher(watcherAlbum.id)" class="btn btn-danger rounded-pill magic-button m-2"
+              type="button">
+              Leave <span class="mdi mdi-door-open"></span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -51,5 +75,11 @@ async function getMyWatchedAlbums() {
   aspect-ratio: 1/1;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.magic-button {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>
