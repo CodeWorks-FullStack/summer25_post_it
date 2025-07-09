@@ -150,8 +150,8 @@ async function getPicturesByAlbumId() {
       <!-- !SECTION -->
     </div>
     <button v-if="account" class="btn btn-success fixed-button m-2" type="button" data-bs-toggle="modal"
-      data-bs-target="#pictureModal">
-      Add Picture <span class="mdi mdi-plus-box"></span>
+      data-bs-target="#pictureModal" :disabled="album.archived">
+      Add Picture <span class="mdi" :class="album.archived ? 'mdi mdi-sign-caution' : 'mdi-plus-box'"></span>
     </button>
   </div>
   <section v-else class="container">

@@ -5,7 +5,7 @@
 
 <template>
   <form>
-    I am the picture form!
+
   </form>
 </template>
 
