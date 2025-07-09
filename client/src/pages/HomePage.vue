@@ -1,7 +1,8 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import AlbumCard from '@/components/AlbumCard.vue';
-import AlbumModal from '@/components/AlbumModal.vue';
+import AlbumForm from '@/components/AlbumForm.vue';
+import ModalWrapper from '@/components/ModalWrapper.vue';
 import { albumsService } from '@/services/AlbumsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -108,7 +109,9 @@ async function getAlbums() {
     </div>
   </section>
 
-  <AlbumModal />
+  <ModalWrapper modalId="albumModal" modalHeader="Create Album">
+    <AlbumForm />
+  </ModalWrapper>
 </template>
 
 <style scoped lang="scss">

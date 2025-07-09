@@ -1,5 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import ModalWrapper from '@/components/ModalWrapper.vue';
+import PictureForm from '@/components/PictureForm.vue';
 import { albumsService } from '@/services/AlbumsService.js';
 import { picturesService } from '@/services/PicturesService.js';
 import { watchersService } from '@/services/WatchersService.js';
@@ -147,6 +149,10 @@ async function getPicturesByAlbumId() {
       </section>
       <!-- !SECTION -->
     </div>
+    <button v-if="account" class="btn btn-success fixed-button m-2" type="button" data-bs-toggle="modal"
+      data-bs-target="#pictureModal">
+      Add Picture <span class="mdi mdi-plus-box"></span>
+    </button>
   </div>
   <section v-else class="container">
     <div class="row">
@@ -155,6 +161,10 @@ async function getPicturesByAlbumId() {
       </div>
     </div>
   </section>
+
+  <ModalWrapper modalId="pictureModal" modalHeader="Create Picture">
+    <PictureForm />
+  </ModalWrapper>
 </template>
 
 
@@ -176,5 +186,11 @@ async function getPicturesByAlbumId() {
   aspect-ratio: 1/1;
   object-fit: cover;
   box-shadow: 3px 3px var(--bs-white);
+}
+
+.fixed-button {
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }
 </style>
