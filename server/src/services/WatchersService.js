@@ -16,7 +16,14 @@ class WatchersService {
     await watcher.deleteOne()
   }
   async getWatchersByAccountId(userId) {
-    const watchers = await dbContext.Watchers.find({ accountId: userId }).populate('album')
+    // const watchers = await dbContext.Watchers.find({ accountId: userId }).populate('album')
+    const watchers = await dbContext.Watchers.find({ accountId: userId }).populate({
+      path: 'album',
+      populate: {
+        path: 'creator watcherCount',
+        select: 'name picture'
+      }
+    })
     return watchers
   }
   async getWatchersByAlbumId(albumId) {
