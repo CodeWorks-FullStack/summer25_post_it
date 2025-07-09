@@ -142,8 +142,13 @@ async function getPicturesByAlbumId() {
       <section class="col-md-9">
         <!-- TODO make the masonry -->
         <div class="masonry-container">
-          <div v-for="picture in pictures" :key="picture.id">
-            <img :src="picture.imgUrl" :alt="`A picture submitted by ${picture.creator.name}`">
+          <div v-for="picture in pictures" :key="picture.id" class="mb-3 position-relative">
+            <img :src="picture.imgUrl" :alt="`A picture submitted by ${picture.creator.name}`"
+              class="img-fluid rounded">
+            <div class="magic-creator-info m-2">
+              <kbd>{{ picture.creator.name }}</kbd>
+              <img :src="picture.creator.picture" :alt="picture.creator.name">
+            </div>
           </div>
         </div>
       </section>
@@ -192,5 +197,28 @@ async function getPicturesByAlbumId() {
   position: fixed;
   bottom: 0;
   right: 0;
+}
+
+.masonry-container {
+  columns: 200px;
+
+  >* {
+    break-inside: avoid;
+    display: inline-block;
+  }
+}
+
+.magic-creator-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  img {
+    height: 40px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-inline-start: 1rem;
+  }
 }
 </style>
