@@ -91,6 +91,16 @@ async function deleteAlbum() {
   }
 }
 
+async function deletePicture(pictureId) {
+  const yes = await Pop.confirm('Are you sure?')
+  if (!yes) return
+  try {
+    await picturesService.deletePicture(pictureId)
+  } catch (error) {
+    Pop.error(error)
+  }
+}
+
 </script>
 
 
@@ -162,6 +172,11 @@ async function deleteAlbum() {
           <div v-for="picture in pictures" :key="picture.id" class="mb-3 position-relative">
             <img :src="picture.imgUrl" :alt="`A picture submitted by ${picture.creator.name}`"
               class="img-fluid rounded">
+            <button @click="deletePicture(picture.id)"
+              v-if="picture.creatorId == account?.id || identity?.permissions.includes('delete:pictures')"
+              class="btn btn-red magic-button m-1" title="Delete picture">
+              <span class="mdi mdi-delete-forever"></span>
+            </button>
             <div class="magic-creator-info m-2">
               <kbd>{{ picture.creator.name }}</kbd>
               <img :src="picture.creator.picture" :alt="picture.creator.name">
@@ -238,5 +253,18 @@ async function deleteAlbum() {
     object-fit: cover;
     margin-inline-start: 1rem;
   }
+
+}
+
+.magic-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity .5s ease-in-out;
+}
+
+.position-relative:hover .magic-button {
+  opacity: 1;
 }
 </style>

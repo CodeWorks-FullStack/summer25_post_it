@@ -4,6 +4,13 @@ import { Picture } from "@/models/Picture.js"
 import { AppState } from "@/AppState.js"
 
 class PicturesService {
+  async deletePicture(pictureId) {
+    const response = await api.delete(`api/pictures/${pictureId}`)
+    logger.log('DELETED', response.data)
+    const pictures = AppState.pictures
+    const index = pictures.findIndex(pic => pic.id == pictureId)
+    pictures.splice(index, 1)
+  }
   async createPicture(pictureData) {
     const response = await api.post('api/pictures', pictureData)
     logger.log('CREATED PICTURE 🖼️✨', response.data)
