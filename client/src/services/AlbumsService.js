@@ -4,6 +4,10 @@ import { Album } from "@/models/Album.js"
 import { AppState } from "@/AppState.js"
 
 class AlbumsService {
+  async deleteAlbum(albumId) {
+    const response = await api.delete(`api/albums/${albumId}`)
+    logger.log('DELETED', response.data)
+  }
   async createAlbum(albumData) {
     const response = await api.post('api/albums', albumData)
     logger.log('CREATED ALBUM 📔✨', response.data)
@@ -12,7 +16,7 @@ class AlbumsService {
     return album.id
   }
   async archiveAlbum(albumId) {
-    const response = await api.delete(`/api/albums/${albumId}`)
+    const response = await api.delete(`/api/albums/${albumId}/archive`)
     logger.log('ARCHIVED ALBUM 🔒', response.data)
     const album = new Album(response.data)
     AppState.album = album

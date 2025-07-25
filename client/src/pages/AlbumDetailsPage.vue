@@ -8,14 +8,16 @@ import { watchersService } from '@/services/WatchersService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const album = computed(() => AppState.album)
 const account = computed(() => AppState.account)
+const identity = computed(() => AppState.identity)
 const watcherProfiles = computed(() => AppState.watcherProfiles)
 const pictures = computed(() => AppState.pictures)
 
 const route = useRoute()
+const router = useRouter()
 
 onMounted(() => {
   getAlbumById()
@@ -78,6 +80,17 @@ async function getPicturesByAlbumId() {
   }
 }
 
+async function deleteAlbum() {
+  const yes = await Pop.confirm('Are you sure?')
+  if (!yes) return
+  try {
+    await albumsService.deleteAlbum(route.params.albumId)
+    router.push({ name: 'Home' })
+  } catch (error) {
+    Pop.error(error)
+  }
+}
+
 </script>
 
 
@@ -99,12 +112,17 @@ async function getPicturesByAlbumId() {
             <p v-if="album.description">{{ album.description }}</p>
           </div>
           <div class="d-md-flex justify-content-between align-items-end">
-            <div class="text-center text-md-start mb-3 mb-md-0">
-              <span class="bg-info px-3 py-1 rounded-pill me-2">{{ album.category }}</span>
-              <span @click="archiveAlbum()" v-if="album.creatorId == account?.id"
+            <div class="d-flex gap-2 mb-3 mb-md-0">
+              <div class="bg-info px-3 py-1 rounded-pill me-2">{{ album.category }}</div>
+              <div @click="archiveAlbum()" v-if="album.creatorId == account?.id"
                 class="bg-danger px-3 py-1 rounded-pill" role="button">
                 {{ album.archived ? 'Unarchive' : 'Archive' }} Album <span class="mdi mdi-close-circle"></span>
-              </span>
+              </div>
+              <div @click="deleteAlbum()" v-if="identity?.permissions.includes('delete:albums')"
+                class="bg-red px-3 py-1 rounded-pill" role="button">
+                Delete Album
+                <span class="mdi mdi-delete-forever"></span>
+              </div>
             </div>
             <div class="d-flex align-items-end justify-content-center">
               <span>Created by {{ album.creator.name }}</span>
