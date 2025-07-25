@@ -14,7 +14,9 @@ export class AlbumsController extends BaseController {
       .get('/:albumId/pictures', this.getPicturesByAlbumId)
       .use(Auth0Provider.getAuthorizedUserInfo) // all routes after (below) .use require authorization
       .post('', this.createAlbum)
-      .delete('/:albumId', this.archiveAlbum) //soft delete
+      .delete('/:albumId/archive', this.archiveAlbum) //soft delete
+      .use(Auth0Provider.hasPermissions('delete:albums'))
+      .delete('/:albumId', this.deleteAlbum)
   }
 
   /**
@@ -106,6 +108,21 @@ export class AlbumsController extends BaseController {
       const albumId = request.params.albumId
       const pictures = await picturesService.getPicturesByAlbumId(albumId)
       response.send(pictures)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  /**
+@param {import("express").Request} request
+@param {import("express").Response} response
+@param {import("express").NextFunction} next
+*/
+  async deleteAlbum(request, response, next) {
+    try {
+      const albumId = request.params.albumId
+      await albumsService.deleteAlbum(albumId)
+      response.send('Deleted album!')
     } catch (error) {
       next(error)
     }

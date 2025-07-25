@@ -2,6 +2,10 @@ import { dbContext } from "../db/DbContext.js"
 import { BadRequest, Forbidden } from "../utils/Errors.js"
 
 class AlbumsService {
+  async deleteAlbum(albumId) {
+    const album = await this.getAlbumById(albumId)
+    await album.deleteOne()
+  }
   async archiveAlbum(albumId, userInfo) {
     // NOTE a soft delete does not actually remove the item from the database, in this case it just changes a boolean value
 
